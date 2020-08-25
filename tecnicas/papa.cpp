@@ -23,7 +23,7 @@ int knapsack(int i, int c) {
   par k = make_pair(i, c);
 
   memo::iterator it = dp.find(k);
-  if (it != dp.end()) return dp[k];
+  if (it != dp.end()) return it->second;
 
   int n = knapsack(i+1, c);
   int s = 0;
