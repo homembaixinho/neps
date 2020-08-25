@@ -1,48 +1,47 @@
 // Trabalho do Papa
 // https://neps.academy/lesson/177
 
-#include <iostream>
-#include <cstring>
-#include <algorithm>
 #include <bits/stdc++.h> 
 
 #define MAXN 1001
 #define MAXR 1000001
 
 using namespace std;
-using par = pair<int, int>;
-using memo = map<par, int>;
+typedef pair<int, int> par;
+typedef map<par, int> memo;
 
 struct caixa { int p, r; };
-bool operator <(caixa a, caixa b) { return a.r < b.r; }
+bool cmp (caixa a, caixa b) { return a.r - b.p > b.r - a.p; }
 
-int n;
+int N;
 caixa cx[MAXN];
 memo dp;
 
-int knapsack(int n, int c) {
-  if (n == 0 || c == 0 || cx[n].r < 0) return 0;
-  if (cx[n].p > c) return knapsack(n-1, c);
+int knapsack(int i, int c) {
+  if (i == N || c <= 0) return 0;
 
-  par k = make_pair(n, c);
+  par k = make_pair(i, c);
+
   memo::iterator it = dp.find(k);
+  if (it != dp.end()) return dp[k];
 
-  if (it == dp.end())
-    return dp[k] = max(
-      knapsack(n-1, c),
-      1 + knapsack(n-1, min(c-cx[n].p, cx[n].r))
-    );
+  int n = knapsack(i+1, c);
+  int s = 0;
 
-  return it->second;
+  if (cx[i].p <= c && cx[i].r >= 0)
+    s = 1 + knapsack(i+1, min(c-cx[i].p, cx[i].r));
+
+  return dp[k] = max(s,n);
 }
 
 int main() {
-  cin >> n; 
-  for (int i = 1; i <= n; ++i) {
+  cin >> N; 
+
+  for (int i = 0; i < N; ++i) {
     cin >> cx[i].p >> cx[i].r;
     cx[i].r -= cx[i].p;
   }
  
-  sort(cx+1, cx+n+1);
-  cout << knapsack(n, MAXR) << endl;
+  sort(cx, cx+N, cmp);
+  cout << knapsack(0, MAXR) << endl;
 }
