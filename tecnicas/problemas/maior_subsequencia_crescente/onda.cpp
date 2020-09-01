@@ -12,7 +12,7 @@ int m, crescente[MAXM], decrescente[MAXM];
 vi onda;
 
 void lis(vi &s) {
-  vi p = { onda[0] };
+  vi p = { s[0] };
 
   for (int i = 1; i < m; i++) {
     vi::iterator it = lower_bound(p.begin(), p.end(), s[i]);
@@ -28,7 +28,7 @@ void lis(vi &s) {
 }
 
 void lds(vi &s) {
-  vi p = { onda[m-1] };
+  vi p = { s[m-1] };
 
   for (int i = m-2; i >= 0; i--) {
     vi::iterator it = lower_bound(p.begin(), p.end(), s[i]);
