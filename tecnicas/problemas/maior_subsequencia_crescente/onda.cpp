@@ -67,5 +67,5 @@ int main() {
       resp = j;
   }
   
-  cout << 2*resp - 1 << endl;
+  cout << 2*resp - 1 << "\n";
 }
