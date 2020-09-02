@@ -7,7 +7,6 @@
 using namespace std;
 #define MAX 1001
 #define endl "\n"
-typedef long long ll;
 
 int n, m;
 int moedas[MAX], dp[MAX];
